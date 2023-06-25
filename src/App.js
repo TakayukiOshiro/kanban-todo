@@ -1,6 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import { useForm } from 'react-hook-form';
+import Form from './component/Form';
+import { useEffect } from 'react';
 
 function App() {
   const { register, handleSubmit } = useForm();
@@ -31,10 +32,7 @@ function App() {
   return (
     <div className="App">
       <h1>カンバン方式TODO</h1>
-      <form name="newTask" onSubmit={handleSubmit(onSubmitEventHander)} >
-        <input id="task" type="text" {...register('task')}/>
-        <input type="submit" value="追加"/>
-      </form>
+      <Form />
 
       <div id="statusArea" className="width100 centering">
         <div id="notStart" className="left statusBox width30" onDragOver={onDragOver} onDrop={onDropEvent}>
