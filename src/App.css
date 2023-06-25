@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+.left{
+  float: left;
+}
+
+.width100{
+  width: 100%;
+}
+.width30{
+  width: 30%;
+}
+
+.centering{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+ul{
+  padding-left: 0%;
+}
+
+.list-centering{
+  margin: auto;
+  padding-left: 0%;
+  text-align: center;
+}
+
+.list{
+  color: #668ad8;/*Ê¸»ú¿§*/
+  border: dashed 2px #668ad8;/*ÇËÀþ ÂÀ¤µ ¿§*/
+  background: #f1f8ff; /*ÇØ·Ê¿§*/
+  margin-top: 1em;
+}
+
+.statusBox{
+  background: #fffcf4;
+  border-radius :8px;/*³Ñ¤Î´Ý¤ß*/
+  box-shadow :0px 0px 5px silver;/*5px=±Æ¤Î¹­¤¬¤ê¶ñ¹ç*/
+}
+
+#task{
+  margin-right: 0.5em;
+}
+
+form{
+  margin-bottom: 1em;
+}

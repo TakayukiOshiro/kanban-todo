@@ -1,23 +1,61 @@
 import logo from './logo.svg';
 import './App.css';
+import { useForm } from 'react-hook-form';
 
 function App() {
+  const { register, handleSubmit } = useForm();
+
+  function onDropEvent(event){
+    console.log("dropped");
+    console.log(event);
+  }
+
+  function onDragOver(event){
+    event.preventDefault(); // これがないとdropイベントが発火しない
+  }
+
+  function onSubmitEventHander(event){
+    console.log(event.task);
+  }
+
+  const noStartTasks = ["nostart","taskA","taskB"];
+  const list = noStartTasks.map((noStartTask) => <ol className="list-centering list" draggable="true" key={noStartTask}>{noStartTask}</ol>);
+
+  const workingTasks = ["working","taskA","taskB"];
+  const workingList = workingTasks.map((workingTask) => <ol className="list-centering list" draggable="true" key={workingTask}>{workingTask}</ol>);
+
+  const doneTasks = ["done","taskA","taskB"];
+  const doneList = doneTasks.map((doneTask) => <ol className="list-centering list" draggable="true" key={doneTask}>{doneTask}</ol>);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>カンバン方式TODO</h1>
+      <form name="newTask" onSubmit={handleSubmit(onSubmitEventHander)} >
+        <input id="task" type="text" {...register('task')}/>
+        <input type="submit" value="追加"/>
+      </form>
+
+      <div id="statusArea" className="width100 centering">
+        <div id="notStart" className="left statusBox width30" onDragOver={onDragOver} onDrop={onDropEvent}>
+          <h2>未着手</h2>
+          <ul dropzone="move">
+            {list}
+          </ul>
+        </div>
+        <div id="working" className="left statusBox width30" onDragOver={onDragOver} onDrop={onDropEvent}>
+          <h2>作業中</h2>
+          <ul dropzone="move">
+            {workingList}
+          </ul>
+        </div>
+        <div id="done" className="left statusBox width30" onDragOver={onDragOver} onDrop={onDropEvent}>
+          <h2>完了</h2>
+          <ul dropzone="move">
+            {doneList}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
