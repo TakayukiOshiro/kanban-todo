@@ -3,7 +3,7 @@ import {Firebase} from "../firebase.js";
 import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
 
 function Form(){
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit,reset } = useForm();
     const db = getFirestore(Firebase);
     const Ref = collection(db, "kanban-todo");
 
@@ -14,6 +14,7 @@ function Form(){
             name: event.task,
             status: "notStart"
         });
+        reset();
     }
 
 

@@ -1,7 +1,7 @@
 import './App.css';
 import { useForm } from 'react-hook-form';
 import Form from './component/Form';
-import { useEffect } from 'react';
+import TaskArea from './component/TaskArea';
 
 function App() {
   const { register, handleSubmit } = useForm();
@@ -18,41 +18,15 @@ function App() {
   function onSubmitEventHander(event){
     console.log(event.task);
   }
-
-  const noStartTasks = ["nostart","taskA","taskB"];
-  const list = noStartTasks.map((noStartTask) => <ol className="list-centering list" draggable="true" key={noStartTask}>{noStartTask}</ol>);
-
-  const workingTasks = ["working","taskA","taskB"];
-  const workingList = workingTasks.map((workingTask) => <ol className="list-centering list" draggable="true" key={workingTask}>{workingTask}</ol>);
-
-  const doneTasks = ["done","taskA","taskB"];
-  const doneList = doneTasks.map((doneTask) => <ol className="list-centering list" draggable="true" key={doneTask}>{doneTask}</ol>);
-
-
   return (
     <div className="App">
       <h1>カンバン方式TODO</h1>
       <Form />
 
       <div id="statusArea" className="width100 centering">
-        <div id="notStart" className="left statusBox width30" onDragOver={onDragOver} onDrop={onDropEvent}>
-          <h2>未着手</h2>
-          <ul dropzone="move">
-            {list}
-          </ul>
-        </div>
-        <div id="working" className="left statusBox width30" onDragOver={onDragOver} onDrop={onDropEvent}>
-          <h2>作業中</h2>
-          <ul dropzone="move">
-            {workingList}
-          </ul>
-        </div>
-        <div id="done" className="left statusBox width30" onDragOver={onDragOver} onDrop={onDropEvent}>
-          <h2>完了</h2>
-          <ul dropzone="move">
-            {doneList}
-          </ul>
-        </div>
+        <TaskArea title={"未着手"} status={"noStart"}/>
+        <TaskArea title={"作業中"} status={"working"}/>
+        <TaskArea title={"完了"} status={"done"}/>
       </div>
     </div>
   );
