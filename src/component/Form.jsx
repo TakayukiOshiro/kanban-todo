@@ -8,7 +8,6 @@ function Form(){
     const Ref = collection(db, "kanban-todo");
 
     function onSubmitEventHander(event){
-        console.log(event.task);
         const document = doc(Ref, event.task);
         setDoc(document, {
             name: event.task,
