@@ -1,10 +1,13 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useContext } from "react";
 import {Firebase} from "../firebase.js";
 import { getFirestore, collection, doc, setDoc, query, where, getDocs} from "firebase/firestore";
+import BasicContext from '../store/data-context.jsx';
 
 function TaskArea({title,status,tasks}){
 
     const [task,setTask] = useState([]);
+    const ctx = useContext(BasicContext);
+    console.log("ctx.key2: " + ctx.key2);
 
     function onDropEvent(event){
         // console.log("dropped");

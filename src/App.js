@@ -3,9 +3,10 @@ import Form from './component/Form';
 import TaskArea from './component/TaskArea';
 
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, createContext } from "react";
 import {Firebase} from "./firebase.js";
 import { getFirestore, collection, doc, setDoc, query, where, getDocs} from "firebase/firestore";
+import BasicContext from '../src/store/data-context';
 
 
 async function getTasks(status){
@@ -30,6 +31,10 @@ function App() {
   const [workingTasks,setWorkingTasks] = useState([]);
   const [doneTasks,setDoneTasks] = useState([]);
   let tempList =[];
+  const dt = {
+    key1:"111111",
+    key2:"222222",
+  }
 
   useEffect(() =>{
     getTasks("notStart").then((items) =>{
@@ -61,11 +66,13 @@ function App() {
       <h1>カンバン方式TODO</h1>
       <Form />
 
-      <div id="statusArea" className="width100 centering">
-        <TaskArea title={"未着手"} status={"notStart"} tasks={notStartTasks}/>
-        <TaskArea title={"作業中"} status={"working"} tasks={workingTasks}/>
-        <TaskArea title={"完了"} status={"done"} tasks={doneTasks}/>
-      </div>
+      <BasicContext.Provider value={dt}>
+        <div id="statusArea" className="width100 centering">
+          <TaskArea title={"未着手"} status={"notStart"} tasks={notStartTasks}/>
+          <TaskArea title={"作業中"} status={"working"} tasks={workingTasks}/>
+          <TaskArea title={"完了"} status={"done"} tasks={doneTasks}/>
+        </div>
+      </BasicContext.Provider>
     </div>
   );
 }
