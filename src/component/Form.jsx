@@ -84,6 +84,11 @@ function Form(){
             setDoneList(newState);
 
         }
+        const document = doc(Ref, parameter.name);
+        setDoc(document, {
+            status: parameter.status,
+            name: parameter.name
+        });
 
     }
 
