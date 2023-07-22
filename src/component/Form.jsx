@@ -20,6 +20,16 @@ async function getTasks(){
     return taskList;
   }
 
+function updateTaskList(state_taskList,addTask){
+    const returnTaskList = [];
+    for(var i=0; i<state_taskList.length; i++){
+        returnTaskList.push({name:state_taskList[i].name, status:state_taskList[i].status})
+    }
+    returnTaskList.push({name:addTask.name, status:addTask.status});
+
+    return returnTaskList;
+}
+
 function Form(){
     console.log("==========Form rendering==========");
     const { register, handleSubmit,reset } = useForm();
@@ -50,47 +60,33 @@ function Form(){
     let temp_workingList =[];
     let temp_doneList =[];
 
-    function propsTestFunc(parameter){
-        console.log("=======propsTestFunc=======");
+    function updateTask(parameter){
+        console.log("=======updateTask=======");
         console.log(parameter);
-        let index = 0;
+        let newState= [];
         
         if(parameter.status == "notStart"){
             console.log("=======notStartList=======");
-            console.log(notStartList);
-            // temp_notStartList = notStartList;
-            for(let i=0; i<notStartList.length; i++){
-                temp_notStartList.push(notStartList[i]);
-            }
-            index = temp_notStartList.length;
-            temp_notStartList[index] = parameter;
 
-            setNotStartList(temp_notStartList);
+            newState = updateTaskList(notStartList,parameter);
+            setNotStartList(newState);
+
+
 
         }else if(parameter.status == "working"){
             console.log("=======workingList=======");
-            console.log(workingList);
 
-            let newState= [];
-            for(var i=0; i<workingList.length; i++){
-                newState.push({name:workingList[i].name, status:workingList[i].status})
-            }
-            newState.push({name:parameter.name, status:parameter.status});
+            newState = updateTaskList(workingList,parameter);
             setWorkingList(newState);
-
 
             console.log("=======set後=======");
             console.log(workingList);
 
         }else if(parameter.status == "done"){
             console.log("=======doneList=======");
-            console.log(doneList);
 
-            temp_doneList = doneList;
-            index = temp_doneList.length;
-            temp_doneList[index] = parameter;
-
-            setDoneList(temp_doneList);
+            newState = updateTaskList(doneList,parameter);
+            setDoneList(newState);
 
         }
 
@@ -128,9 +124,9 @@ function Form(){
         </form>
         <DnDContext.Provider value={{draggedId, setDraggedId}}>
             <div id="statusArea" className="width100 centering">
-                <TaskArea title={"未着手"} status={"notStart"} taskList={notStartList} func={propsTestFunc}/>
-                <TaskArea title={"作業中"} status={"working"} taskList={workingList} func={propsTestFunc}/>
-                <TaskArea title={"完了"} status={"done"} taskList={doneList} func={propsTestFunc}/>
+                <TaskArea title={"未着手"} status={"notStart"} taskList={notStartList} func={updateTask}/>
+                <TaskArea title={"作業中"} status={"working"} taskList={workingList} func={updateTask}/>
+                <TaskArea title={"完了"} status={"done"} taskList={doneList} func={updateTask}/>
             </div>
         </DnDContext.Provider>
     </div>
