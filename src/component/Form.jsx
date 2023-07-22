@@ -60,27 +60,22 @@ function Form(){
     let temp_workingList =[];
     let temp_doneList =[];
 
-    function updateTask(parameter){
-        console.log("=======updateTask=======");
+    function moveTask(parameter){
+        console.log("=======moveTask=======");
         console.log(parameter);
         let newState= [];
-        
+
         if(parameter.status == "notStart"){
             console.log("=======notStartList=======");
 
             newState = updateTaskList(notStartList,parameter);
             setNotStartList(newState);
 
-
-
         }else if(parameter.status == "working"){
             console.log("=======workingList=======");
 
             newState = updateTaskList(workingList,parameter);
             setWorkingList(newState);
-
-            console.log("=======set後=======");
-            console.log(workingList);
 
         }else if(parameter.status == "done"){
             console.log("=======doneList=======");
@@ -124,9 +119,9 @@ function Form(){
         </form>
         <DnDContext.Provider value={{draggedId, setDraggedId}}>
             <div id="statusArea" className="width100 centering">
-                <TaskArea title={"未着手"} status={"notStart"} taskList={notStartList} func={updateTask}/>
-                <TaskArea title={"作業中"} status={"working"} taskList={workingList} func={updateTask}/>
-                <TaskArea title={"完了"} status={"done"} taskList={doneList} func={updateTask}/>
+                <TaskArea title={"未着手"} status={"notStart"} taskList={notStartList} onTaskMove={moveTask}/>
+                <TaskArea title={"作業中"} status={"working"} taskList={workingList} onTaskMove={moveTask}/>
+                <TaskArea title={"完了"} status={"done"} taskList={doneList} onTaskMove={moveTask}/>
             </div>
         </DnDContext.Provider>
     </div>

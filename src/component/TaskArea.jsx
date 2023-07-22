@@ -3,7 +3,7 @@ import {Firebase} from "../firebase.js";
 import { getFirestore, collection, doc, setDoc, query, where, getDocs} from "firebase/firestore";
 import {BasicContext,DnDContext} from '../store/data-context.jsx';
 
-function TaskArea({title,status,taskList,func}){
+function TaskArea({title,status,taskList,onTaskMove}){
 console.log(title + " TaskArea rendering");
 console.log(taskList);
     const dndContext = useContext(DnDContext);
@@ -12,28 +12,42 @@ console.log(taskList);
     let tempList = [];
 
     function onDropEvent(event){
-        console.log("=======onDropEvent=======");
+        console.log("=======" + title + " onDropEvent=======");
         let newTaskStatus = dndContext.draggedId;
         newTaskStatus.status = status;
-        func(newTaskStatus);
+        onTaskMove(newTaskStatus);
 
     }
 
+    let dragInfo = dndContext.draggedId;
     function onDragStartHandler(event){
-        let dragInfo = dndContext.draggedId;
+        console.log("==========" + title + " onDragStartHandler==========");
         dragInfo.name = event.target.innerText;
         dragInfo.status = status;
 
         dndContext.setDraggedId(dragInfo);
+        for(let i=0; i<taskList.length; i++){
+            if(taskList[i].name == dragInfo.name){
+                taskList.splice(i,1);
+                break;
+            }
+        }
 
     }
 
     function onDragEndHandler(event){
-        console.log("==========onDragEndHandler==========");
-        console.log(taskList);
+        console.log("==========" + title + " onDragEndHandler==========");
+        // for(let i=0; i<taskList.length; i++){
+        //     if(taskList[i].name == dragInfo.name){
+        //         taskList.splice(i,1);
+        //         break;
+        //     }
+        // }
+        // console.log(taskList);
     }
 
     function getTaskList(){
+        tempList = [];
         for(let i=0; i<taskList.length; i++){
             if(taskList[i].status == status){
                 tempList[i] = <ol className="list-centering list" draggable="true" onDragStart={onDragStartHandler} onDragEnd={onDragEndHandler} key={"id" + i}>{taskList[i].name}</ol>;
