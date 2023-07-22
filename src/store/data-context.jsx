@@ -1,8 +1,5 @@
 import React from 'react';
 
-const BasicContext = React.createContext({
-    key1: "",
-    key2: "",
-});
+export const BasicContext = React.createContext();
 
-export default BasicContext;
+export const DnDContext = React.createContext();
